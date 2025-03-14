@@ -9,37 +9,57 @@ pipeline {
         }
         stage('Deploy to dev') {
             steps {
-                echo 'Deployment to DEV has started'
+                script{
+                    deploy("DEV")
+                }
             }
         }
         stage('Tests on dev') {
             steps {
-                echo 'Testing on DEV has started'
+                script{
+                    test("DEV")
+                }
             }
         }
 
         //Fake staging environment
         stage('Deploy to STG') {
             steps {
-                echo 'Deployment to STG has started'
+                script{
+                    deploy("STG")
+                }
             }
         }
         stage('Tests on STG') {
             steps {
-                echo 'Testing on STG has started'
+                script{
+                    test("STG")
+                }
             }
         }
 
         //Fake production environment
         stage('Deploy to PRD') {
             steps {
-                echo 'Deployment to PRD has started'
+                script{
+                    deploy("PRD")
+                }
             }
         }
         stage('Tests on PRD') {
             steps {
-                echo 'Testing on PRD has started'
+                script{
+                    test("PRD")
+                }
             }
         }
     }
+}
+
+def deploy(String env){
+    echo 'Deployment to ${env} has started'
+}
+
+def test(String env){
+    echo 'Testing on ${env} has started'
 }
