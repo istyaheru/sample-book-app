@@ -6,12 +6,13 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building node application is starting'
+                sh "npm install"
             }
         }
         stage('Deploy to dev') {
             steps {
                 script{
-                    deploy("DEV")
+                    deploy("DEV", 1010)
                 }
             }
         }
@@ -27,7 +28,7 @@ pipeline {
         stage('Deploy to STG') {
             steps {
                 script{
-                    deploy("STG")
+                    deploy("STG", 2020)
                 }
             }
         }
@@ -43,7 +44,7 @@ pipeline {
         stage('Deploy to PRD') {
             steps {
                 script{
-                    deploy("PRD")
+                    deploy("PRD", 3030)
                 }
             }
         }
@@ -57,8 +58,9 @@ pipeline {
     }
 }
 
-def deploy(String env){
+def deploy(String env, int port){
     echo "Deployment to ${env} has started"
+    sh "pm2 start -h \"books-${env}\" index.js -- ${port}"
 }
 
 def test(String env){
