@@ -7,6 +7,7 @@ pipeline {
             steps {
                 echo 'Building node application is starting'
                 sh "npm install"
+                sh "npm test"
             }
         }
         stage('Deploy to dev') {
@@ -60,8 +61,7 @@ pipeline {
 
 def deploy(String env, int port){
     echo "Deployment to ${env} has started"
-    sh "pm2 status"
-    //sh "pm2 delete \"books-${env}\""
+    //sh "pm2 start -h \"books-${env}\"""
     sh "pm2 start -h \"books-${env}\" index.js -- ${port}"
 }
 
