@@ -1,6 +1,7 @@
 pipeline {
     agent any
     triggers{ pollSCM('*/1 * * * *') }
+    
 
     stages {
         stage('Build') {
@@ -20,7 +21,7 @@ pipeline {
         stage('Tests on dev') {
             steps {
                 script{
-                    test("DEV")
+                    test("BOOKS", "DEV")
                 }
             }
         }
@@ -36,7 +37,7 @@ pipeline {
         stage('Tests on STG') {
             steps {
                 script{
-                    test("STG")
+                    test("BOOKS", "STG")
                 }
             }
         }
@@ -52,7 +53,7 @@ pipeline {
         stage('Tests on PRD') {
             steps {
                 script{
-                    test("PRD")
+                    test("BOOKS", "PRD")
                 }
             }
         }
@@ -65,6 +66,7 @@ def deploy(String env, int port){
     sh "pm2 start -h \"books-${env}\" index.js -- ${port}"
 }
 
-def test(String env){
-    echo "Testing on ${env} has started"
+def test(,String test_set, String env){
+    echo "Testing ${test_set} on ${env} has started"
+    sh "npm run ${test_set} ${test_set}_${env}"
 }
