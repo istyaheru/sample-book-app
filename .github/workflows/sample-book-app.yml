@@ -39,8 +39,14 @@ jobs:
     needs: [deploy-dev]
     steps:
         - uses: actions/checkout@v4
+          with:
+            repository: "/istyaheru/api-automation"
         - name: Big steppy
           run: echo "Testing on DEV started"
+        - name: Install depends
+          run: npm install
+        - name: Run API tests
+          run: npm run BOOKS BOOKS_DEV
 
   deploy-stg:
     runs-on: self-hosted
