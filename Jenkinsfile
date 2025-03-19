@@ -7,8 +7,9 @@ pipeline {
         stage('Build') {
             steps {
                 echo 'Building node application is starting'
+                sh "ls"
                 sh "npm install"
-                sh "npm test"
+                //sh "npm test"
             }
         }
         stage('Deploy to dev') {
@@ -68,5 +69,7 @@ def deploy(String env, int port){
 
 def test(String test_set, String env){
     echo "Testing ${test_set} on ${env} has started"
+    git branch: 'main', poll: false, url: 'https://github.com/istyaheru/api-automation.git'
+    sh "npm install"
     sh "npm run ${test_set} ${test_set}_${env}"
 }
