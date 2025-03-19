@@ -63,7 +63,9 @@ pipeline {
 
 def deploy(String env, int port){
     echo "Deployment to ${env} has started"
+    git branch: 'main', poll: false, url: 'https://github.com/istyaheru/sample-book-app.git'
     //sh "pm2 start -h \"books-${env}\"""
+    sh "pm2 delete \"books-${env}\" || exit 0"
     sh "pm2 start -h \"books-${env}\" index.js -- ${port}"
 }
 
