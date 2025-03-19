@@ -1,0 +1,25 @@
+name: "Deploy node application"
+description: "Composite action to deploy our node application with pm2"
+inputs:
+  env:
+    description: "The environment to deploy the book application"
+    required: true
+  port:
+    description: "The port where the pm2 service runs"
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Big steppy
+      run: echo "Deployment to ${{inputs.env}} started"
+      shell: bash
+    - name: Install depends
+      run: npm install
+      shell: bash
+    - name: Delete existing pm2
+      run: pm2 delete "books-${{inputs.env}}" || exit 0
+      shell: bash
+    - name: Run new pm2 book app service
+      run: pm2 start -n "books-${{inputs.env}}" index.js -- ${{inputs.port}}
+      shell: bash
