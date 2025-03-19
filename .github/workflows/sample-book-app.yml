@@ -31,15 +31,10 @@ jobs:
     runs-on: self-hosted
     needs: [deploy-dev]
     steps:
-        - uses: actions/checkout@v4
+        - uses: ./.github/actions/test
           with:
-            repository: "istyaheru/api-automation"
-        - name: Big steppy
-          run: echo "Testing on DEV started"
-        - name: Install depends
-          run: npm install
-        - name: Run API tests
-          run: npm run BOOKS BOOKS_DEV
+            env: DEV
+            test-suite: BOOKS
 
   deploy-stg:
     runs-on: self-hosted
@@ -55,9 +50,10 @@ jobs:
     runs-on: self-hosted
     needs: [deploy-stg]
     steps:
-        - uses: actions/checkout@v4
-        - name: Big steppy
-          run: echo "Testing on STG started"
+        - uses: ./.github/actions/test
+          with:
+            env: STG
+            test-suite: BOOKS
 
   deploy-prd:
     runs-on: self-hosted
@@ -73,6 +69,7 @@ jobs:
     runs-on: self-hosted
     needs: [deploy-prd]
     steps:
-        - uses: actions/checkout@v4
-        - name: Big steppy
-          run: echo "Testing on PRD started"
+        - uses: ./.github/actions/test
+          with:
+            env: PRD
+            test-suite: BOOKS
