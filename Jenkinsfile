@@ -66,7 +66,7 @@ def deploy(String env, int port){
     sh "pm2 start -h \"books-${env}\" index.js -- ${port}"
 }
 
-def test(,String test_set, String env){
+def test(String test_set, String env){
     echo "Testing ${test_set} on ${env} has started"
     sh "npm run ${test_set} ${test_set}_${env}"
 }
