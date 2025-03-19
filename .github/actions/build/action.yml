@@ -1,0 +1,11 @@
+name: "Build node application"
+description: "Composite action to set up and build our node application"
+runs:
+  using: composite
+  steps:
+    - name: Big steppy
+      run: echo "Building of node application started"
+      shell: bash
+    - name: Install depends
+      run: npm install
+      shell: bash
