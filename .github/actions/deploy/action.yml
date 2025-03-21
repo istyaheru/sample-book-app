@@ -18,7 +18,7 @@ runs:
       run: npm install
       shell: bash
     - name: Delete existing pm2
-      run: pm2 delete "books-${{inputs.env}}" || exit 0
+      run: RUNNER_TRACKING_ID="" && pm2 delete "books-${{inputs.env}}" || exit 0
       shell: bash
     - name: Run new pm2 book app service
       run: pm2 start -n "books-${{inputs.env}}" index.js -- ${{inputs.port}}
