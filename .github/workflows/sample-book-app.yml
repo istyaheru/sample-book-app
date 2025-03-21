@@ -25,7 +25,7 @@ jobs:
         - uses: ./.github/actions/deploy
           with:
             env: "DEV"
-            port: "1010"
+            port: "1050"
 
   test-dev:
     runs-on: self-hosted
